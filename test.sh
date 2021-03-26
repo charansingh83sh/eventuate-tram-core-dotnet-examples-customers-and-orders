@@ -62,12 +62,3 @@ docker-compose up -d customer-service
 docker-compose up -d order-service
 docker-compose up -d order-history-service
 docker-compose up -d order-history-text-search-service
-
-#Run Tests
-dotnet build EndToEndTests/EndToEndTests.csproj
-dotnet test EndToEndTests/EndToEndTests.csproj
-# Tear down test environment
-
-if [ -z "$KEEP_RUNNING" ] ; then
-  docker-compose down -v --remove-orphans
-fi
