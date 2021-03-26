@@ -165,7 +165,7 @@ services:
       context: .
       dockerfile: OrderHistoryTextSearchService/Dockerfile
     ports: 
-      - "8084:80"
+      - "8085:80"
     container_name: order-history-text-search-service
     # networks:
         # - esnetwork
