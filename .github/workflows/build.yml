@@ -25,3 +25,16 @@ jobs:
 
     - name: Build
       run: ./test.sh
+      
+    - name: Logs
+      run: docker logs order-history-text-search-service
+      
+    - name: Build Tests
+      run: dotnet build EndToEndTests/EndToEndTests.csproj
+      
+    - name: Run Tests
+      run: dotnet test EndToEndTests/EndToEndTests.csproj
+      
+      
+      
+      
