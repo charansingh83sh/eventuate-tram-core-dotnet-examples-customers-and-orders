@@ -23,7 +23,7 @@ namespace EndToEndTests
         string urlCustomer = "http://localhost:8081/customer";
         string urlOrder = "http://localhost:8082/order";
         string urlOrderHistory = "http://localhost:8083/customers";
-        string urlOrderHistoryTextSearch = "http://localhost:8084";
+        string urlOrderHistoryTextSearch = "http://localhost:8085";
         public CustomersAndOrdersEndToEndTest()
         {
         }
