@@ -32,7 +32,7 @@ else
   dotnet nuget add source https://api.bintray.com/nuget/eventuateio-oss/eventuateio-dotnet-snapshots
 fi
 
-wsl -d docker-desktop sysctl -w vm.max_map_count=262144
+sysctl -w vm.max_map_count=262144
 
 docker-compose build
 
