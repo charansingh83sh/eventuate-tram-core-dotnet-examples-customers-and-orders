@@ -27,7 +27,7 @@ jobs:
       run: ./test.sh
       
     - name: Logs
-      run: docker logs order-history-text-search-service
+      run: docker logs "${{ job.services.order-history-text-search-service.id }}"
       
     - name: Build Tests
       run: dotnet build EndToEndTests/EndToEndTests.csproj
