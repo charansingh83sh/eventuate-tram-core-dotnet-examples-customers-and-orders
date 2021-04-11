@@ -25,9 +25,13 @@ jobs:
 
     - name: Build
       run: ./test.sh
-      
-    - name: Logs
-      run: docker logs "${{ job.services.order-history-text-search-service.id }}"
+            
+    - name: Dump Mongo logs
+      uses: jwalton/gh-docker-logs@v1
+      with:
+        images: 'mongo'
+        # Only show last 100 lines of each
+        tail: '100'
       
     - name: Build Tests
       run: dotnet build EndToEndTests/EndToEndTests.csproj
