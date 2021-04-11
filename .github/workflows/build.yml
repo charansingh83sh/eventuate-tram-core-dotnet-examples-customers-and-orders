@@ -35,11 +35,7 @@ jobs:
     - name: Dump docker logs on failure
       if: failure()
       uses: jwalton/gh-docker-logs@v1
-      with:
-        images: 'eventuate-tram-core-dotnet-examples-customers-and-orders_elasticsearch_1'
-        # Only show last 100 lines of each
-        tail: '3000'
-      
+     
       
       
       
