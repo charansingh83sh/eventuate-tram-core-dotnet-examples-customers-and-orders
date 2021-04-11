@@ -26,12 +26,9 @@ jobs:
     - name: Build
       run: ./test.sh
             
-    - name: Dump Mongo logs
+    - name: Dump docker logs on failure
+      if: failure()
       uses: jwalton/gh-docker-logs@v1
-      with:
-        images: 'mongo'
-        # Only show last 100 lines of each
-        tail: '100'
       
     - name: Build Tests
       run: dotnet build EndToEndTests/EndToEndTests.csproj
