@@ -35,6 +35,10 @@ jobs:
     - name: Dump docker logs on failure
       if: failure()
       uses: jwalton/gh-docker-logs@v1
+      with:
+        images: 'elasticsearch,order-history-text-search-service'
+        # Only show last 100 lines of each
+        tail: '3000'
       
       
       
