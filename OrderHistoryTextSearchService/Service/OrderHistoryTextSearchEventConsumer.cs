@@ -18,7 +18,7 @@ namespace OrderHistoryTextSearchService.Service
         public TextViewService<OrderTextView> orderTextViewService;
         private readonly IElasticClient _elasticClient;
         private readonly ILogger _logger;
-        public OrderHistoryTextSearchEventConsumer(IElasticClient elasticClient, ILogger logger)
+        public OrderHistoryTextSearchEventConsumer(IElasticClient elasticClient, ILogger<OrderHistoryTextSearchEventConsumer> logger)
         {
             _logger = logger;
             _elasticClient = elasticClient;

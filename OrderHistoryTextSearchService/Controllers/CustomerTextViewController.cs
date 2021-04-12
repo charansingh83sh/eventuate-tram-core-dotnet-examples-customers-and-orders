@@ -18,7 +18,7 @@ namespace OrderHistoryTextSearchService.Controllers
         private readonly IElasticClient _elasticClient;
         private readonly ILogger _logger;
 
-        public CustomerTextViewController(IElasticClient elasticClient, ILogger logger)
+        public CustomerTextViewController(IElasticClient elasticClient, ILogger<CustomerTextViewController> logger)
         {
             _logger = logger;
             _elasticClient = elasticClient;
