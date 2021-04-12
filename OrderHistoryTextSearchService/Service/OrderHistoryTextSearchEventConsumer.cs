@@ -17,14 +17,17 @@ namespace OrderHistoryTextSearchService.Service
         public TextViewService<CustomerTextView> customerTextViewService;
         public TextViewService<OrderTextView> orderTextViewService;
         private readonly IElasticClient _elasticClient;
-        public OrderHistoryTextSearchEventConsumer(IElasticClient elasticClient)
+        private readonly ILogger _logger;
+        public OrderHistoryTextSearchEventConsumer(IElasticClient elasticClient, ILogger logger)
         {
+            _logger = logger;
             _elasticClient = elasticClient;
-            customerTextViewService = new TextViewService<CustomerTextView>(_elasticClient, CustomerTextView.INDEX, CustomerTextView.TYPE);
-            orderTextViewService = new TextViewService<OrderTextView>(_elasticClient, OrderTextView.INDEX, OrderTextView.TYPE);
+            customerTextViewService = new TextViewService<CustomerTextView>(_elasticClient, CustomerTextView.INDEX, CustomerTextView.TYPE, _logger);
+            orderTextViewService = new TextViewService<OrderTextView>(_elasticClient, OrderTextView.INDEX, OrderTextView.TYPE, _logger);
         }
         public void Handle(IDomainEventEnvelope<CustomerCreatedEvent> customerCreatedEvent)
         {
+            _logger.LogInformation("Handle CustomerCreatedEvent");
             var customerTextView = new CustomerTextView
             {
                 id = customerCreatedEvent.AggregateId,
@@ -34,7 +37,8 @@ namespace OrderHistoryTextSearchService.Service
             customerTextViewService.Index(customerTextView);
         }
         public void Handle(IDomainEventEnvelope<OrderCreatedEvent> orderCreatedEvent)
-        {      
+        {
+            _logger.LogInformation("Handle OrderCreatedEvent");
             var orderTextView = new OrderTextView
             {
                 id = orderCreatedEvent.AggregateId,

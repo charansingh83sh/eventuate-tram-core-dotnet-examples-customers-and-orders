@@ -16,16 +16,20 @@ namespace OrderHistoryTextSearchService.Controllers
     {
         public TextViewService<CustomerTextView> customerTextViewService;
         private readonly IElasticClient _elasticClient;
-        public CustomerTextViewController(IElasticClient elasticClient)
+        private readonly ILogger _logger;
+
+        public CustomerTextViewController(IElasticClient elasticClient, ILogger logger)
         {
+            _logger = logger;
             _elasticClient = elasticClient;
-            customerTextViewService = new TextViewService<CustomerTextView>(_elasticClient, CustomerTextView.INDEX, CustomerTextView.TYPE);
+            customerTextViewService = new TextViewService<CustomerTextView>(_elasticClient, CustomerTextView.INDEX, CustomerTextView.TYPE, _logger);
         }
         [HttpPost]
         public IActionResult CreateCustomerTextView([FromBody] CustomerTextView customerTextView)
         {
             try
             {
+                _logger.LogInformation("CreateCustomerTextView Request");
                 customerTextViewService.Index(customerTextView);
                 return Ok();
             }
@@ -37,6 +41,7 @@ namespace OrderHistoryTextSearchService.Controllers
         [HttpGet]
         public IActionResult Search([FromQuery] string search)
         {
+            _logger.LogInformation("Search Request");
             var result = customerTextViewService.Search(search);
             return Ok(result);
         }

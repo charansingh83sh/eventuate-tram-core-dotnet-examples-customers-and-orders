@@ -15,8 +15,10 @@ namespace OrderHistoryTextSearchService.Service
         private readonly IElasticClient _elasticClient;
         private String _type;
         private String _index;
-        public TextViewService(IElasticClient elasticClient, String index, String type)
+        private readonly ILogger _logger;
+        public TextViewService(IElasticClient elasticClient, String index, String type, ILogger logger)
         {
+            _logger = logger;
             _elasticClient = elasticClient;
             _type = type;
             _index = index;
@@ -25,7 +27,9 @@ namespace OrderHistoryTextSearchService.Service
         {
             try
             {
-                var response = _elasticClient.Index(textView, i => i.Index(_index));        
+                _logger.LogInformation("CREATE INDEX");
+                var response = _elasticClient.Index(textView, i => i.Index(_index));
+                _logger.LogInformation(response.DebugInformation);
             }
             catch (Exception)
             {
@@ -34,11 +38,12 @@ namespace OrderHistoryTextSearchService.Service
         }
         public List<T> Search(string value)
         {
-
+            _logger.LogInformation("GET SEARCH");
             var response = _elasticClient.Search<T>(s => s
             .Index(_index)
             .Query(q => q.QueryString(d => d.Query(value))));
             var docs = response.Documents.ToList();
+            _logger.LogInformation(docs.Count().ToString());
             return docs;
         }
     }
